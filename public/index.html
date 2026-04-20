@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحتوى الإسلامي</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green-dark: #1a3a2a;
+  --green-mid: #2d6a4f;
+  --green-light: #52b788;
+  --green-pale: #d8f3dc;
+  --gold: #c9a84c;
+  --gold-light: #f4d58d;
+  --bg: #f8f6f0;
+  --bg2: #fff;
+  --text: #1a1a1a;
+  --text2: #4a5568;
+  --border: #e2ddd5;
+  --radius: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text); direction: rtl; }
+
+nav {
+  background: var(--green-dark);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  position: sticky; top: 0; z-index: 100;
+}
+.logo { font-family: 'Amiri', serif; font-size: 20px; color: var(--gold-light); display: flex; align-items: center; gap: 10px; }
+.logo-icon { width: 34px; height: 34px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--green-dark); }
+.nav-links { display: flex; gap: 2px; }
+.nav-btn { background: transparent; border: none; color: rgba(255,255,255,0.65); padding: 6px 14px; border-radius: 8px; font-size: 13px; font-family: 'Cairo', sans-serif; cursor: pointer; transition: all 0.2s; }
+.nav-btn:hover { color: #fff; background: rgba(255,255,255,0.08); }
+.nav-btn.active { color: var(--gold-light); background: rgba(201,168,76,0.15); }
+
+.page { display: none; padding: 2rem; max-width: 1000px; margin: 0 auto; }
+.page.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+.hero { background: var(--green-dark); border-radius: var(--radius); padding: 2.5rem; margin-bottom: 1.5rem; text-align: center; }
+.hero-ar { font-family: 'Amiri', serif; font-size: 26px; color: var(--gold-light); margin-bottom: 8px; }
+.hero h1 { font-size: 20px; font-weight: 500; color: #fff; margin-bottom: 6px; }
+.hero p { font-size: 13px; color: rgba(255,255,255,0.6); }
+
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr)); gap: 10px; margin-bottom: 1.5rem; }
+.stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem; text-align: center; }
+.stat-num { font-size: 28px; font-weight: 600; color: var(--green-mid); }
+.stat-label { font-size: 12px; color: var(--text2); margin-top: 3px; }
+
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 16px; }
+.card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem; }
+.card-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 14px; }
+.sec-head { font-size: 14px; font-weight: 600; color: var(--green-dark); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--green-pale); display: flex; align-items: center; gap: 8px; }
+.sec-head::before { content:''; width:4px; height:18px; background:var(--green-light); border-radius:2px; display:block; }
+
+label { font-size: 12px; font-weight: 500; color: var(--text2); display: block; margin-bottom: 5px; margin-top: 12px; }
+label:first-of-type { margin-top: 0; }
+input, select, textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; font-size: 13px; color: var(--text); font-family: 'Cairo', sans-serif; outline: none; transition: border-color 0.2s; }
+input:focus, select:focus, textarea:focus { border-color: var(--green-light); background: #fff; }
+textarea { resize: vertical; min-height: 70px; line-height: 1.6; }
+
+.btn { border: 1px solid var(--border); border-radius: 8px; padding: 9px 18px; font-size: 13px; font-family: 'Cairo', sans-serif; cursor: pointer; background: transparent; color: var(--text); transition: all 0.2s; }
+.btn:hover { background: var(--bg); }
+.btn-primary { background: var(--green-mid); color: #fff; border-color: var(--green-mid); font-weight: 600; }
+.btn-primary:hover { background: var(--green-dark); }
+.btn-primary:disabled { background: #aaa; border-color: #aaa; cursor: not-allowed; }
+.btn-row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+
+.platform-wrap { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.ptag { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 1px solid var(--border); cursor: pointer; color: var(--text2); background: var(--bg); transition: all 0.2s; }
+.ptag.on { background: var(--green-pale); color: var(--green-dark); border-color: var(--green-light); font-weight: 600; }
+
+.img-drop { border: 2px dashed var(--border); border-radius: 10px; padding: 1.5rem; text-align: center; cursor: pointer; font-size: 13px; color: var(--text2); transition: all 0.2s; background: var(--bg); }
+.img-drop:hover { border-color: var(--green-light); background: var(--green-pale); }
+.img-drop img { max-height: 90px; border-radius: 6px; margin-bottom: 6px; display: block; margin: 0 auto 6px; }
+
+/* Progress */
+.progress-wrap { margin-top: 14px; display: none; }
+.progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-top: 6px; }
+.progress-fill { height: 100%; background: var(--green-light); border-radius: 3px; width: 0%; transition: width 0.4s; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+.progress-label { font-size: 12px; color: var(--text2); }
+
+/* Video Player */
+.video-wrap { margin-top: 14px; display: none; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: #000; }
+.video-wrap video { width: 100%; max-height: 400px; display: block; }
+.video-actions { padding: 10px; display: flex; gap: 8px; background: var(--bg); }
+
+/* Videos list */
+.video-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.video-item:last-child { border: none; }
+.v-thumb { width: 52px; height: 36px; border-radius: 6px; background: #000; overflow: hidden; flex-shrink: 0; }
+.v-thumb video { width: 100%; height: 100%; object-fit: cover; }
+
+.empty { text-align: center; padding: 2rem; color: var(--text2); font-size: 13px; }
+.empty-icon { font-size: 32px; margin-bottom: 8px; }
+
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(10px); background: var(--green-dark); color: var(--gold-light); padding: 10px 22px; border-radius: 30px; font-size: 13px; font-weight: 500; opacity: 0; transition: all 0.3s; pointer-events: none; z-index: 999; border: 1px solid var(--gold); white-space: nowrap; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.badge { font-size: 11px; padding: 3px 9px; border-radius: 20px; font-weight: 500; }
+.badge-g { background: var(--green-pale); color: var(--green-dark); }
+
+.sheikh-item { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); }
+.sheikh-item:last-child { border: none; }
+.play-btn { width: 36px; height: 36px; border-radius: 50%; background: var(--green-pale); border: none; cursor: pointer; font-size: 12px; color: var(--green-dark); flex-shrink: 0; transition: all 0.2s; }
+.play-btn:hover { background: var(--green-light); color: #fff; }
+
+.sched-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.sched-item:last-child { border: none; }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.dot-yt{background:#e24b4a} .dot-tt{background:#111} .dot-ig{background:#d4537e} .dot-fb{background:#378add}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-icon">☪</div>
+    <span>المحتوى الإسلامي</span>
+  </div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="goPage('home',this)">🏠 الرئيسية</button>
+    <button class="nav-btn" onclick="goPage('create',this)">🎬 إنشاء فيديو</button>
+    <button class="nav-btn" onclick="goPage('videos',this)">📁 فيديوهاتي</button>
+    <button class="nav-btn" onclick="goPage('library',this)">🎙 القراء</button>
+    <button class="nav-btn" onclick="goPage('schedule',this)">📅 جدول النشر</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-ar">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+    <h1>منصة المحتوى الإسلامي</h1>
+    <p>أنشئ فيديوهات قرآنية حقيقية ووزّعها على جميع المنصات</p>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num" id="s-total">0</div><div class="stat-label">فيديو منشأ</div></div>
+    <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">قارئ</div></div>
+    <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">منصة</div></div>
+    <div class="stat-card"><div class="stat-num" id="s-sched">0</div><div class="stat-label">مجدول</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+    <div class="card" style="cursor:pointer;" onclick="goPage('create',document.querySelectorAll('.nav-btn')[1])">
+      <div style="font-size:28px;margin-bottom:8px;">🎬</div>
+      <div style="font-weight:600;margin-bottom:4px;">إنشاء فيديو</div>
+      <div style="font-size:12px;color:var(--text2);">ارفع صورة وأنشئ فيديو قرآني حقيقي</div>
+    </div>
+    <div class="card" style="cursor:pointer;" onclick="goPage('videos',document.querySelectorAll('.nav-btn')[2])">
+      <div style="font-size:28px;margin-bottom:8px;">📁</div>
+      <div style="font-weight:600;margin-bottom:4px;">فيديوهاتي</div>
+      <div style="font-size:12px;color:var(--text2);">شاهد وحمّل فيديوهاتك السابقة</div>
+    </div>
+    <div class="card" style="cursor:pointer;" onclick="goPage('library',document.querySelectorAll('.nav-btn')[3])">
+      <div style="font-size:28px;margin-bottom:8px;">🎙</div>
+      <div style="font-weight:600;margin-bottom:4px;">مكتبة القراء</div>
+      <div style="font-size:12px;color:var(--text2);">8 قراء مشهورين</div>
+    </div>
+    <div class="card" style="cursor:pointer;" onclick="goPage('schedule',document.querySelectorAll('.nav-btn')[4])">
+      <div style="font-size:28px;margin-bottom:8px;">📅</div>
+      <div style="font-weight:600;margin-bottom:4px;">جدول النشر</div>
+      <div style="font-size:12px;color:var(--text2);">نظّم مواعيد نشرك</div>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE -->
+<div id="page-create" class="page">
+  <div class="sec-head">🎬 إنشاء فيديو جديد</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">إعدادات الفيديو</div>
+
+      <label>صورة الخلفية</label>
+      <div class="img-drop" onclick="document.getElementById('imgUp').click()" id="dropZone">
+        <div id="dropContent">
+          <div style="font-size:32px;margin-bottom:6px;">🖼</div>
+          اضغط لرفع صورة الخلفية
+        </div>
+        <input type="file" id="imgUp" accept="image/*" style="display:none" onchange="handleImg(this)">
+      </div>
+
+      <label>القارئ</label>
+      <select id="c-sheikh">
+        <option value="">اختر القارئ...</option>
+        <option value="sudais">عبدالرحمن السديس</option>
+        <option value="shuraim">سعود الشريم</option>
+        <option value="ghamdi">سعد الغامدي</option>
+        <option value="afasy">مشاري العفاسي</option>
+        <option value="ajamy">أحمد العجمي</option>
+        <option value="hudhaify">علي الحذيفي</option>
+        <option value="husary">محمود خليل الحصري</option>
+        <option value="minshawi">محمد صديق المنشاوي</option>
+      </select>
+
+      <label>السورة</label>
+      <select id="c-sura">
+        <option>الفاتحة</option><option>البقرة</option><option>آل عمران</option>
+        <option>النساء</option><option>المائدة</option><option>يس</option>
+        <option>الرحمن</option><option>الملك</option><option>الكهف</option>
+        <option>الواقعة</option><option>الإخلاص</option><option>الفلق</option><option>الناس</option>
+      </select>
+
+      <label>عدد الآيات (يؤثر على مدة الفيديو)</label>
+      <input type="number" id="c-ayat" value="5" min="1" max="30">
+
+      <label>تأثير الصورة</label>
+      <select id="c-effect">
+        <option value="none">ثابتة</option>
+        <option value="zoom">تكبير تدريجي</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <div class="card-title">المنصات والمعاينة</div>
+
+      <label>المنصات المستهدفة</label>
+      <div class="platform-wrap">
+        <div class="ptag" onclick="this.classList.toggle('on')">▶ يوتيوب</div>
+        <div class="ptag" onclick="this.classList.toggle('on')">♪ تيك توك</div>
+        <div class="ptag" onclick="this.classList.toggle('on')">◎ انستغرام</div>
+        <div class="ptag" onclick="this.classList.toggle('on')">ƒ فيسبوك</div>
+      </div>
+
+      <label>وصف وهاشتاقات</label>
+      <textarea id="c-desc" placeholder="بسم الله الرحمن الرحيم...
+#قرآن #تلاوة #إسلام"></textarea>
+
+      <!-- Progress -->
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-label" id="progressLabel">⏳ جاري إنشاء الفيديو...</div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+
+      <!-- Video Player -->
+      <div class="video-wrap" id="videoWrap">
+        <video id="videoPlayer" controls playsinline></video>
+        <div class="video-actions">
+          <a id="downloadBtn" class="btn btn-primary" download>⬇ تحميل الفيديو</a>
+          <button class="btn" onclick="resetCreate()">🔄 فيديو جديد</button>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="createBtn" onclick="createVideo()">✔ إنشاء الفيديو</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MY VIDEOS -->
+<div id="page-videos" class="page">
+  <div class="sec-head">📁 فيديوهاتي</div>
+  <div class="card">
+    <div id="videos-list">
+      <div class="empty"><div class="empty-icon">🎬</div>لا توجد فيديوهات بعد. أنشئ أول فيديو!</div>
+    </div>
+  </div>
+</div>
+
+<!-- LIBRARY -->
+<div id="page-library" class="page">
+  <div class="sec-head">🎙 مكتبة القراء</div>
+  <div class="card">
+    <div id="sheikh-list"></div>
+  </div>
+</div>
+
+<!-- SCHEDULE -->
+<div id="page-schedule" class="page">
+  <div class="sec-head">📅 جدول النشر</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">إضافة موعد</div>
+      <label>المنصة</label>
+      <select id="sc-platform"><option>يوتيوب</option><option>تيك توك</option><option>انستغرام</option><option>فيسبوك</option></select>
+      <label>اليوم</label>
+      <select id="sc-day"><option>السبت</option><option>الأحد</option><option>الاثنين</option><option>الثلاثاء</option><option>الأربعاء</option><option>الخميس</option><option>الجمعة</option></select>
+      <label>الوقت</label>
+      <select id="sc-time"><option>7:00 صباحاً</option><option>8:00 صباحاً</option><option>12:00 ظهراً</option><option>6:00 مساءً</option><option>8:00 مساءً</option></select>
+      <label>نوع المحتوى</label>
+      <select id="sc-type"><option>تلاوة قرآنية</option><option>دعاء</option><option>حديث نبوي</option><option>موعظة</option></select>
+      <div class="btn-row"><button class="btn btn-primary" onclick="addSchedule()">إضافة</button></div>
+    </div>
+    <div class="card">
+      <div class="card-title">الجدول الأسبوعي</div>
+      <div id="schedule-list"><div class="empty"><div class="empty-icon">📅</div>لا توجد مواعيد بعد.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const sheikhData = [
+  {id:'sudais', name:'عبدالرحمن السديس', style:'مرتّل هادئ'},
+  {id:'shuraim', name:'سعود الشريم', style:'مجوّد قوي'},
+  {id:'ghamdi', name:'سعد الغامدي', style:'رواية ورش'},
+  {id:'afasy', name:'مشاري العفاسي', style:'عاطفي مؤثر'},
+  {id:'ajamy', name:'أحمد العجمي', style:'خاشع هادئ'},
+  {id:'hudhaify', name:'علي الحذيفي', style:'واضح مرتّل'},
+  {id:'husary', name:'محمود خليل الحصري', style:'كلاسيكي'},
+  {id:'minshawi', name:'محمد صديق المنشاوي', style:'تجويد كامل'},
+];
+
+let schedItems = [];
+let videoCount = 0;
+
+function goPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (id === 'library') renderLibrary();
+  if (id === 'videos') loadVideos();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function handleImg(input) {
+  if (!input.files[0]) return;
+  const url = URL.createObjectURL(input.files[0]);
+  document.getElementById('dropContent').innerHTML =
+    `<img src="${url}"><br><span style="font-size:12px;">${input.files[0].name}</span>`;
+}
+
+async function createVideo() {
+  const sheikh = document.getElementById('c-sheikh').value;
+  const sura = document.getElementById('c-sura').value;
+  const ayat = document.getElementById('c-ayat').value;
+  const effect = document.getElementById('c-effect').value;
+  const imgFile = document.getElementById('imgUp').files[0];
+
+  if (!imgFile) { showToast('⚠ ارفع صورة أولاً'); return; }
+  if (!sheikh) { showToast('⚠ اختر القارئ'); return; }
+
+  const btn = document.getElementById('createBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الإنشاء...';
+
+  document.getElementById('progressWrap').style.display = 'block';
+  document.getElementById('videoWrap').style.display = 'none';
+
+  let progress = 0;
+  const fill = document.getElementById('progressFill');
+  const label = document.getElementById('progressLabel');
+
+  const interval = setInterval(() => {
+    progress = Math.min(progress + Math.random() * 8, 90);
+    fill.style.width = progress + '%';
+    if (progress < 30) label.textContent = '⬇ جاري تحميل صوت القارئ...';
+    else if (progress < 70) label.textContent = '🎬 جاري دمج الصوت والصورة...';
+    else label.textContent = '✨ جاري تجهيز الفيديو...';
+  }, 600);
+
+  const formData = new FormData();
+  formData.append('image', imgFile);
+  formData.append('sheikh', sheikh);
+  formData.append('sura', sura);
+  formData.append('ayat', ayat);
+  formData.append('effect', effect);
+
+  try {
+    const res = await fetch('/api/create-video', { method: 'POST', body: formData });
+    const data = await res.json();
+    clearInterval(interval);
+
+    if (data.success) {
+      fill.style.width = '100%';
+      label.textContent = '✅ تم إنشاء الفيديو!';
+
+      setTimeout(() => {
+        document.getElementById('progressWrap').style.display = 'none';
+        const vw = document.getElementById('videoWrap');
+        vw.style.display = 'block';
+        const vp = document.getElementById('videoPlayer');
+        vp.src = data.videoUrl;
+        vp.play();
+        const dl = document.getElementById('downloadBtn');
+        dl.href = data.videoUrl;
+        dl.download = `قرآن_${sura}_${new Date().toLocaleDateString('ar-SA')}.mp4`;
+        videoCount++;
+        document.getElementById('s-total').textContent = videoCount;
+        showToast('✅ ' + data.message);
+      }, 500);
+    } else {
+      throw new Error(data.error);
+    }
+  } catch (err) {
+    clearInterval(interval);
+    document.getElementById('progressWrap').style.display = 'none';
+    showToast('❌ خطأ: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✔ إنشاء الفيديو';
+  }
+}
+
+function resetCreate() {
+  document.getElementById('videoWrap').style.display = 'none';
+  document.getElementById('progressWrap').style.display = 'none';
+  document.getElementById('c-sheikh').value = '';
+  document.getElementById('c-ayat').value = 5;
+  document.getElementById('c-desc').value = '';
+  document.getElementById('imgUp').value = '';
+  document.getElementById('dropContent').innerHTML = '<div style="font-size:32px;margin-bottom:6px;">🖼</div>اضغط لرفع صورة الخلفية';
+}
+
+async function loadVideos() {
+  try {
+    const res = await fetch('/api/videos');
+    const videos = await res.json();
+    const list = document.getElementById('videos-list');
+    if (!videos.length) {
+      list.innerHTML = '<div class="empty"><div class="empty-icon">🎬</div>لا توجد فيديوهات بعد.</div>';
+      return;
+    }
+    list.innerHTML = videos.map(v => `
+      <div class="video-item">
+        <div class="v-thumb"><video src="${v.url}" muted></video></div>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:600;">${v.name.replace('video_','').replace('.mp4','')}</div>
+          <div style="font-size:11px;color:var(--text2);">${new Date(v.date).toLocaleDateString('ar-SA')}</div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn" onclick="playVideo('${v.url}')">▶ تشغيل</button>
+          <a class="btn btn-primary" href="${v.url}" download>⬇</a>
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    document.getElementById('videos-list').innerHTML = '<div class="empty">تعذر تحميل الفيديوهات</div>';
+  }
+}
+
+function playVideo(url) {
+  goPage('create', document.querySelectorAll('.nav-btn')[1]);
+  const vw = document.getElementById('videoWrap');
+  vw.style.display = 'block';
+  const vp = document.getElementById('videoPlayer');
+  vp.src = url;
+  vp.play();
+  document.getElementById('downloadBtn').href = url;
+}
+
+function renderLibrary() {
+  document.getElementById('sheikh-list').innerHTML = sheikhData.map(s => `
+    <div class="sheikh-item">
+      <button class="play-btn" onclick="showToast('🎵 ${s.name}')">▶</button>
+      <div style="flex:1;">
+        <div style="font-size:14px;font-weight:600;">${s.name}</div>
+        <div style="font-size:12px;color:var(--text2);">${s.style}</div>
+      </div>
+      <span class="badge badge-g">${s.style}</span>
+    </div>`).join('');
+}
+
+const dotClass = {يوتيوب:'dot-yt','تيك توك':'dot-tt',انستغرام:'dot-ig',فيسبوك:'dot-fb'};
+
+function addSchedule() {
+  const p = document.getElementById('sc-platform').value;
+  const d = document.getElementById('sc-day').value;
+  const t = document.getElementById('sc-time').value;
+  const ty = document.getElementById('sc-type').value;
+  schedItems.push({p,d,t,ty});
+  document.getElementById('s-sched').textContent = schedItems.length;
+  document.getElementById('schedule-list').innerHTML = schedItems.map(s => `
+    <div class="sched-item">
+      <div class="dot ${dotClass[s.p]||'dot-yt'}"></div>
+      <div style="flex:1;"><strong>${s.p}</strong> — ${s.d} ${s.t}</div>
+      <span style="font-size:12px;color:var(--text2);">${s.ty}</span>
+    </div>`).join('');
+  showToast('📅 تم إضافة الموعد!');
+}
+</script>
+</body>
+</html>
